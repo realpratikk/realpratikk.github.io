@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HN8Q38BLXG"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -40,7 +39,7 @@
         }
 
         h1 {
-            font-weight: 300; /* Thin style like your example */
+            font-weight: 300;
             font-size: 3rem;
             margin: 0;
             letter-spacing: 2px;
@@ -75,7 +74,6 @@
 
         .grid {
             display: grid;
-            /* Auto-fit creates columns based on width (responsive) */
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 40px;
             justify-content: center;
@@ -91,6 +89,7 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: var(--card-shadow);
+            cursor: pointer;
         }
 
         .portal-card:hover {
@@ -101,7 +100,7 @@
         /* The Screenshot Container */
         .screenshot-frame {
             width: 100%;
-            height: 250px; /* Fixed height for uniformity */
+            height: 250px;
             overflow: hidden;
             border-bottom: 1px solid #eee;
             background-color: #eee;
@@ -110,12 +109,11 @@
         .screenshot-frame img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures the image fills the box without stretching */
-            object-position: top; /* Anchors image to top (header) */
+            object-fit: cover;
+            object-position: top;
             transition: transform 0.5s ease;
         }
 
-        /* Subtle zoom effect on hover */
         .portal-card:hover .screenshot-frame img {
             transform: scale(1.05);
         }
@@ -145,6 +143,71 @@
             padding: 40px;
             color: #999;
             font-size: 0.9rem;
+        }
+
+        /* --- CALENDAR MODAL STYLES --- */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 0;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px; /* Made narrower since Agenda view is vertical */
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        /* Responsive iframe container */
+        .iframe-container {
+            position: relative;
+            padding-bottom: 100%; /* Taller aspect ratio for list view */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            z-index: 1010;
+            background: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .close-btn:hover {
+            background: #eee;
         }
     </style>
 </head>
@@ -211,22 +274,43 @@
                 </div>
             </a>
 
-            <a href="mailto:pkamble1@binghamton.edu" class="portal-card">
+            <div class="portal-card" onclick="openCalendar()">
                 <div class="screenshot-frame">
                     <img src="https://placehold.co/600x400/ff9a9e/333333?font=lato&text=My+Calendar" alt="Calendar Screenshot">
                 </div>
                 <div class="card-label">
-                    <h3>Contact / Calendar</h3>
-                    <p>Schedule a Meeting</p>
+                    <h3>Calendar</h3>
+                    <p>Click to View Schedule</p>
                 </div>
-            </a>
+            </div>
 
         </div>
     </div>
 
-    <div class="footer">
-        &copy; 2025 Pratik Kamble. Hosted on GitHub Pages.
+    <div id="calendarModal" class="modal-overlay" onclick="closeCalendar(event)">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeCalendar(event)">&times;</span>
+            <div class="iframe-container">
+                <iframe src="https://calendar.google.com/calendar/embed?src=pkamble1%40binghamton.edu&ctz=America%2FNew_York&mode=AGENDA&showCalendars=0&showTabs=0&showPrint=0&showDate=0&showTitle=0" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+            </div>
+        </div>
     </div>
+
+    <div class="footer">
+        &copy; 2025 Pratik Kamble.
+    </div>
+
+    <script>
+        function openCalendar() {
+            document.getElementById('calendarModal').style.display = 'flex';
+        }
+
+        function closeCalendar(event) {
+            if (event.target.id === 'calendarModal' || event.target.className === 'close-btn') {
+                document.getElementById('calendarModal').style.display = 'none';
+            }
+        }
+    </script>
 
 </body>
 </html>
