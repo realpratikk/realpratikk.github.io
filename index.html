@@ -6,12 +6,12 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
       gtag('config', 'G-HN8Q38BLXG');
     </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pratik Kamble | Researcher</title>
+    <title>Pratik's Dimension</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -19,7 +19,7 @@
             --bg-color: #f8f9fa;
             --text-color: #333;
             --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            --hover-shadow: 0 10px 15px rgba(0,0,0,0.15);
+            --hover-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
 
         body {
@@ -30,10 +30,10 @@
             padding: 0;
         }
 
-        /* Top Header Section */
+        /* --- Header --- */
         .header-container {
             text-align: center;
-            padding: 60px 20px 40px;
+            padding: 50px 20px 30px;
             background: white;
             border-bottom: 1px solid #e5e5e5;
         }
@@ -51,10 +51,6 @@
             color: #666;
             margin-top: 15px;
             font-weight: 300;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
         }
 
         hr {
@@ -65,45 +61,72 @@
             margin: 30px auto;
         }
 
-        /* The Dashboard Grid */
+        /* --- Layout Containers --- */
         .dashboard-container {
-            max-width: 1400px;
+            width: 100%;
+            max-width: 800px; /* Constrain EVERYTHING to 800px for alignment */
             margin: 40px auto;
             padding: 0 20px;
+            box-sizing: border-box;
         }
 
-        .grid {
+        /* ROW 1: The Hero (Wiki) */
+        .hero-row {
+            margin-bottom: 20px; /* Small gap between Hero and Tools */
+        }
+
+        .hero-card {
+            width: 100%;
+            /* No max-width needed here, the container handles it */
+        }
+        
+        .hero-card .screenshot-frame {
+            height: 380px; 
+        }
+
+        .hero-card .card-label {
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* ROW 2: The Tool Grid (Miniature) */
+        .mini-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            justify-content: center;
+            grid-template-columns: repeat(6, 1fr); /* 6 Equal Columns */
+            gap: 10px; /* Tight gap */
         }
 
-        /* The "Portal" Card */
+        /* Responsive: Break into rows on mobile */
+        @media (max-width: 768px) {
+            .mini-grid { grid-template-columns: repeat(3, 1fr); }
+            .hero-card .screenshot-frame { height: 250px; }
+        }
+
+        /* --- Card Styles --- */
         .portal-card {
             text-decoration: none;
             color: inherit;
             display: block;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             background: white;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
             box-shadow: var(--card-shadow);
             cursor: pointer;
+            border: 1px solid #eee;
         }
 
         .portal-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: var(--hover-shadow);
         }
 
-        /* The Screenshot Container */
         .screenshot-frame {
             width: 100%;
-            height: 250px;
             overflow: hidden;
             border-bottom: 1px solid #eee;
             background-color: #eee;
+            position: relative;
         }
 
         .screenshot-frame img {
@@ -118,96 +141,68 @@
             transform: scale(1.05);
         }
 
-        /* The Label Below */
-        .card-label {
-            padding: 20px;
+        /* --- Mini Card Specifics (Micro Size) --- */
+        .mini-card .screenshot-frame {
+            height: 60px; /* Very small height */
+        }
+
+        .mini-card .card-label {
+            padding: 10px 4px; 
             text-align: center;
         }
 
-        .card-label h3 {
+        .mini-card .card-label h3 {
+            font-size: 0.85rem; /* Small text */
             margin: 0;
-            font-size: 1.25rem;
-            font-weight: 400;
-            color: #222;
+            font-weight: 600;
         }
         
-        .card-label p {
-            margin: 5px 0 0;
-            font-size: 0.9rem;
-            color: #777;
+        .mini-card .card-label p {
+            display: none; /* Hide subtitle to keep it clean & small */
         }
 
         /* Footer */
         .footer {
             text-align: center;
-            padding: 40px;
+            padding: 50px;
             color: #999;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
-        /* --- CALENDAR MODAL STYLES --- */
+        /* --- CALENDAR MODAL --- */
         .modal-overlay {
-            display: none; /* Hidden by default */
+            display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
             z-index: 1000;
-            align-items: center;
-            justify-content: center;
+            align-items: center; justify-content: center;
             backdrop-filter: blur(5px);
         }
 
         .modal-content {
             background: white;
-            padding: 0;
             border-radius: 12px;
-            width: 90%;
-            max-width: 600px; /* Made narrower since Agenda view is vertical */
+            width: 90%; max-width: 600px;
             position: relative;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
             overflow: hidden;
         }
 
-        /* Responsive iframe container */
         .iframe-container {
-            position: relative;
-            padding-bottom: 100%; /* Taller aspect ratio for list view */
-            height: 0;
-            overflow: hidden;
+            position: relative; padding-bottom: 100%; height: 0; overflow: hidden;
         }
-
         .iframe-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         }
 
         .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 30px;
-            font-weight: bold;
-            color: #333;
-            cursor: pointer;
-            z-index: 1010;
-            background: white;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute; top: 15px; right: 20px;
+            font-size: 30px; font-weight: bold; color: #333;
+            cursor: pointer; z-index: 1010; background: white;
+            border-radius: 50%; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .close-btn:hover {
-            background: #eee;
         }
     </style>
 </head>
@@ -222,67 +217,74 @@
     </div>
 
     <div class="dashboard-container">
-        <div class="grid">
-
-            <a href="/wiki" class="portal-card">
+        
+        <div class="hero-row">
+            <a href="/wiki" class="portal-card hero-card">
                 <div class="screenshot-frame">
                     <img src="./wiki.png" alt="Wiki Screenshot">
                 </div>
                 <div class="card-label">
-                    <h3>My Research Wiki</h3>
-                    <p>Publications, Patents & Notes</p>
+                    <h3 style="font-size: 1.5rem;">My Research Wiki</h3>
+                    <p style="font-size: 1rem; color: #666; margin-top: 5px;">The Knowledge Graph: Publications, Patents & Notes</p>
                 </div>
             </a>
+        </div>
 
-            <a href="https://github.com/pratikkamble-research" target="_blank" class="portal-card">
+        <div class="mini-grid">
+
+            <a href="https://github.com/pratikkamble-research" target="_blank" class="portal-card mini-card">
                 <div class="screenshot-frame">
-                    <img src="https://placehold.co/600x400/181717/FFFFFF?font=lato&text=GitHub+Profile" alt="GitHub Screenshot">
+                    <img src="https://placehold.co/200x100/181717/FFFFFF?font=lato&text=GitHub" alt="GitHub">
                 </div>
                 <div class="card-label">
-                    <h3>My Code</h3>
-                    <p>Open Source Contributions</p>
+                    <h3>Code</h3>
                 </div>
             </a>
 
-            <a href="https://linkedin.com/in/realpratikk" target="_blank" class="portal-card">
+            <a href="https://linkedin.com/in/realpratikk" target="_blank" class="portal-card mini-card">
                 <div class="screenshot-frame">
-                    <img src="https://placehold.co/600x400/0077b5/FFFFFF?font=lato&text=LinkedIn+Profile" alt="LinkedIn Screenshot">
+                    <img src="https://placehold.co/200x100/0077b5/FFFFFF?font=lato&text=LinkedIn" alt="LinkedIn">
                 </div>
                 <div class="card-label">
-                    <h3>My Network</h3>
-                    <p>Professional Updates</p>
+                    <h3>Network</h3>
                 </div>
             </a>
 
-            <a href="https://scholar.google.com/citations?user=gQeL9AIAAAAJ&hl=en&authuser=1" target="_blank" class="portal-card">
+            <a href="https://scholar.google.com/citations?user=gQeL9AIAAAAJ&hl=en&authuser=1" target="_blank" class="portal-card mini-card">
                 <div class="screenshot-frame">
-                    <img src="https://placehold.co/600x400/4285F4/FFFFFF?font=lato&text=Google+Scholar" alt="Scholar Screenshot">
+                    <img src="https://placehold.co/200x100/4285F4/FFFFFF?font=lato&text=Scholar" alt="Scholar">
                 </div>
                 <div class="card-label">
-                    <h3>Google Scholar</h3>
-                    <p>Citations & Impact</p>
+                    <h3>Scholar</h3>
                 </div>
             </a>
 
-            <a href="https://orcid.org/0009-0004-5375-1673" target="_blank" class="portal-card">
+            <a href="https://orcid.org/0009-0004-5375-1673" target="_blank" class="portal-card mini-card">
                 <div class="screenshot-frame">
-                    <img src="https://placehold.co/600x400/A6CE39/FFFFFF?font=lato&text=ORCID+Record" alt="ORCID Screenshot">
+                    <img src="https://placehold.co/200x100/A6CE39/FFFFFF?font=lato&text=ORCID" alt="ORCID">
                 </div>
                 <div class="card-label">
                     <h3>ORCID</h3>
-                    <p>Researcher ID</p>
                 </div>
             </a>
 
-            <div class="portal-card" onclick="openCalendar()">
+            <div class="portal-card mini-card" onclick="openCalendar()">
                 <div class="screenshot-frame">
-                    <img src="https://placehold.co/600x400/ff9a9e/333333?font=lato&text=My+Calendar" alt="Calendar Screenshot">
+                    <img src="https://placehold.co/200x100/ff9a9e/333333?font=lato&text=Calendar" alt="Calendar">
                 </div>
                 <div class="card-label">
-                    <h3>Calendar</h3>
-                    <p>Click to View Schedule</p>
+                    <h3>Schedule</h3>
                 </div>
             </div>
+
+            <a href="mailto:pkamble1@binghamton.edu" class="portal-card mini-card">
+                <div class="screenshot-frame">
+                    <img src="https://placehold.co/200x100/333/FFFFFF?font=lato&text=Email" alt="Email">
+                </div>
+                <div class="card-label">
+                    <h3>Contact</h3>
+                </div>
+            </a>
 
         </div>
     </div>
