@@ -12,14 +12,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pratik's Dimension</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --bg-color: #f8f9fa;
             --text-color: #333;
             --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            --hover-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            --hover-shadow: 0 8px 15px rgba(0,0,0,0.15);
         }
 
         body {
@@ -64,87 +64,108 @@
         /* --- Layout Containers --- */
         .dashboard-container {
             width: 100%;
-            max-width: 800px; /* Constrain EVERYTHING to 800px for alignment */
+            max-width: 800px; 
             margin: 40px auto;
             padding: 0 20px;
             box-sizing: border-box;
         }
 
         /* ROW 1: The Hero (Wiki) */
-        .hero-row {
-            margin-bottom: 20px; /* Small gap between Hero and Tools */
-        }
+        .hero-row { margin-bottom: 20px; }
 
         .hero-card {
             width: 100%;
-            /* No max-width needed here, the container handles it */
-        }
-        
-        .hero-card .screenshot-frame {
-            height: 380px; 
-        }
-
-        .hero-card .card-label {
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* ROW 2: The Tool Grid (Miniature) */
-        .mini-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr); /* 6 Equal Columns */
-            gap: 10px; /* Tight gap */
-        }
-
-        /* Responsive: Break into rows on mobile */
-        @media (max-width: 768px) {
-            .mini-grid { grid-template-columns: repeat(3, 1fr); }
-            .hero-card .screenshot-frame { height: 250px; }
-        }
-
-        /* --- Card Styles --- */
-        .portal-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #eee;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             text-decoration: none;
             color: inherit;
             display: block;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            background: white;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            cursor: pointer;
-            border: 1px solid #eee;
         }
-
-        .portal-card:hover {
-            transform: translateY(-3px);
+        
+        .hero-card:hover {
+            transform: translateY(-4px);
             box-shadow: var(--hover-shadow);
         }
 
-        .screenshot-frame {
+        .hero-card .screenshot-frame {
+            height: 380px;
             width: 100%;
+            background-color: #eee;
             overflow: hidden;
             border-bottom: 1px solid #eee;
-            background-color: #eee;
-            position: relative;
         }
 
-        .screenshot-frame img {
+        .hero-card .screenshot-frame img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: top;
             transition: transform 0.5s ease;
         }
+        
+        .hero-card:hover .screenshot-frame img { transform: scale(1.02); }
 
-        .portal-card:hover .screenshot-frame img {
-            transform: scale(1.05);
+        .hero-card .card-label {
+            padding: 20px;
+            text-align: center;
         }
 
-        /* --- Mini Card Specifics (Micro Size) --- */
-        .mini-card .screenshot-frame {
-            height: 60px; /* Very small height */
+        /* ROW 2: The Tool Grid */
+        .mini-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
         }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mini-grid { grid-template-columns: repeat(3, 1fr); }
+            .hero-card .screenshot-frame { height: 250px; }
+        }
+
+        /* --- Mini Card Styles --- */
+        .mini-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .mini-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        /* THE COLORED BRAND HEADER (Replaces Placeholder Images) */
+        .brand-header {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem; /* The "Name in White" */
+            letter-spacing: 0.5px;
+        }
+
+        /* Brand Colors */
+        .bg-github   { background-color: #181717; }
+        .bg-linkedin { background-color: #0077b5; }
+        .bg-scholar  { background-color: #4285F4; }
+        .bg-orcid    { background-color: #A6CE39; }
+        .bg-calendar { background-color: #ff9a9e; color: #333 !important; } /* Light Red, Dark Text */
+        .bg-email    { background-color: #333333; }
 
         .mini-card .card-label {
             padding: 10px 4px; 
@@ -152,13 +173,10 @@
         }
 
         .mini-card .card-label h3 {
-            font-size: 0.85rem; /* Small text */
+            font-size: 0.85rem;
             margin: 0;
             font-weight: 600;
-        }
-        
-        .mini-card .card-label p {
-            display: none; /* Hide subtitle to keep it clean & small */
+            color: #333;
         }
 
         /* Footer */
@@ -172,29 +190,21 @@
         /* --- CALENDAR MODAL --- */
         .modal-overlay {
             display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            align-items: center; justify-content: center;
+            z-index: 1000; align-items: center; justify-content: center;
             backdrop-filter: blur(5px);
         }
 
         .modal-content {
-            background: white;
-            border-radius: 12px;
+            background: white; border-radius: 12px;
             width: 90%; max-width: 600px;
-            position: relative;
+            position: relative; overflow: hidden;
             box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-            overflow: hidden;
         }
 
-        .iframe-container {
-            position: relative; padding-bottom: 100%; height: 0; overflow: hidden;
-        }
-        .iframe-container iframe {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        }
+        .iframe-container { position: relative; padding-bottom: 100%; height: 0; overflow: hidden; }
+        .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
         .close-btn {
             position: absolute; top: 15px; right: 20px;
@@ -219,7 +229,7 @@
     <div class="dashboard-container">
         
         <div class="hero-row">
-            <a href="/wiki" class="portal-card hero-card">
+            <a href="/wiki" class="hero-card">
                 <div class="screenshot-frame">
                     <img src="./wiki.png" alt="Wiki Screenshot">
                 </div>
@@ -232,58 +242,34 @@
 
         <div class="mini-grid">
 
-            <a href="https://github.com/pratikkamble-research" target="_blank" class="portal-card mini-card">
-                <div class="screenshot-frame">
-                    <img src="https://placehold.co/200x100/181717/FFFFFF?font=lato&text=GitHub" alt="GitHub">
-                </div>
-                <div class="card-label">
-                    <h3>Code</h3>
-                </div>
+            <a href="https://github.com/pratikkamble-research" target="_blank" class="mini-card">
+                <div class="brand-header bg-github">GitHub</div>
+                <div class="card-label"><h3>Code</h3></div>
             </a>
 
-            <a href="https://linkedin.com/in/realpratikk" target="_blank" class="portal-card mini-card">
-                <div class="screenshot-frame">
-                    <img src="https://placehold.co/200x100/0077b5/FFFFFF?font=lato&text=LinkedIn" alt="LinkedIn">
-                </div>
-                <div class="card-label">
-                    <h3>Network</h3>
-                </div>
+            <a href="https://linkedin.com/in/realpratikk" target="_blank" class="mini-card">
+                <div class="brand-header bg-linkedin">LinkedIn</div>
+                <div class="card-label"><h3>Network</h3></div>
             </a>
 
-            <a href="https://scholar.google.com/citations?user=gQeL9AIAAAAJ&hl=en&authuser=1" target="_blank" class="portal-card mini-card">
-                <div class="screenshot-frame">
-                    <img src="https://placehold.co/200x100/4285F4/FFFFFF?font=lato&text=Scholar" alt="Scholar">
-                </div>
-                <div class="card-label">
-                    <h3>Scholar</h3>
-                </div>
+            <a href="https://scholar.google.com/citations?user=gQeL9AIAAAAJ&hl=en&authuser=1" target="_blank" class="mini-card">
+                <div class="brand-header bg-scholar">Scholar</div>
+                <div class="card-label"><h3>Scholar</h3></div>
             </a>
 
-            <a href="https://orcid.org/0009-0004-5375-1673" target="_blank" class="portal-card mini-card">
-                <div class="screenshot-frame">
-                    <img src="https://placehold.co/200x100/A6CE39/FFFFFF?font=lato&text=ORCID" alt="ORCID">
-                </div>
-                <div class="card-label">
-                    <h3>ORCID</h3>
-                </div>
+            <a href="https://orcid.org/0009-0004-5375-1673" target="_blank" class="mini-card">
+                <div class="brand-header bg-orcid">ORCID</div>
+                <div class="card-label"><h3>ORCID</h3></div>
             </a>
 
-            <div class="portal-card mini-card" onclick="openCalendar()">
-                <div class="screenshot-frame">
-                    <img src="https://placehold.co/200x100/ff9a9e/333333?font=lato&text=Calendar" alt="Calendar">
-                </div>
-                <div class="card-label">
-                    <h3>Schedule</h3>
-                </div>
+            <div class="mini-card" onclick="openCalendar()">
+                <div class="brand-header bg-calendar">Calendar</div>
+                <div class="card-label"><h3>Schedule</h3></div>
             </div>
 
-            <a href="mailto:pkamble1@binghamton.edu" class="portal-card mini-card">
-                <div class="screenshot-frame">
-                    <img src="https://placehold.co/200x100/333/FFFFFF?font=lato&text=Email" alt="Email">
-                </div>
-                <div class="card-label">
-                    <h3>Contact</h3>
-                </div>
+            <a href="mailto:pkamble1@binghamton.edu" class="mini-card">
+                <div class="brand-header bg-email">Email</div>
+                <div class="card-label"><h3>Contact</h3></div>
             </a>
 
         </div>
